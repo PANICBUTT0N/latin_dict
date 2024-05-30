@@ -6,7 +6,7 @@ def word():
     func_dict = {'- m.': 'masculine',
                  '- n.': 'neuter',
                  '- f.': 'feminine'}
-    filename = 'latin_output_word.csv'
+    filename = r'output\latin_output_word.csv'
     return func_dict, filename
 
 
@@ -14,7 +14,7 @@ def abbreviations():
     func_dict = {'- m.': 'm.',
                  '- n.': 'n.',
                  '- f.': 'f.'}
-    filename = 'latin_output_abbrev.csv'
+    filename = r'output\latin_output_abbrev.csv'
     return func_dict, filename
 
 
