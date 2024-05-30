@@ -43,6 +43,6 @@ however, future commits of latin_dict may implement sub-entry denotation and for
 * Entries with multiple words in Latin word and/or definition cells were originally comma delimited. To prevent CSV
 formatting issues, these commas are replaced with hyphens (-) during the code's runtime. However, they are re-replaced
 with commas in the final CSV output.
-<a/>
+
 ## License
 [GNU General Public License](https://choosealicense.com/licenses/gpl-3.0/)
