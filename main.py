@@ -1,6 +1,8 @@
 import re
 import csv
 
+# Allow user to decide if they want the gender field written as a full word or a single letter abbreviation.
+
 
 def word():
     func_dict = {'- m.': 'masculine',
@@ -30,14 +32,16 @@ while True:
             print('Invalid input.')
 
 with open('str.txt', 'r', encoding='utf-8') as read:
+    # Entries in the dictionary are separated by carets. This makes each line an
+    # individual entry. Also removes problematic formatting.
     content = [line.lstrip().replace('*', '').replace('{gen.}', 'gen.').replace
-               (', ', '- ').replace('$', ',').replace('%', '').replace('pl.', ' pl.') for line in read.read().split('^')]
-    # Entries in the dictionary are separated by carets. This makes each line an individual entry.
-
+               (', ', '- ').replace('$', ',').replace('%', '').replace
+               ('pl.', ' pl.') for line in read.read().split('^')]
 content = [line.split(',') for line in content]
 
+# Find gender values present in word column cells and moves them to discrete cells if present. If not present, empty
+# cell is created to normalize formatting.
 entries = []
-
 for entry in content:
     modified_entry = entry
     gender_present = any(gender in modified_entry[0] for gender in gender_replacements.keys())
@@ -46,11 +50,13 @@ for entry in content:
             if gender in modified_entry[0]:
                 modified_entry[0] = modified_entry[0].replace(gender, '')
                 modified_entry.insert(1, replacement)
-                break  # Break after finding and processing the first gender
+                break
     else:
         modified_entry.insert(1, '')
     entries.append(modified_entry)
 
+# If word definitions reference other words, input the referenced word and its definition into the definition field.
+# Additionally, provide the row index of the referenced entry.
 for row_index, row_contents in enumerate(entries):
     row_contents.insert(0, str(row_index))
     if '[' in row_contents[3]:
@@ -62,10 +68,11 @@ for row_index, row_contents in enumerate(entries):
                 break
     else:
         row_contents.append('')
+    # Re-introduce commas to separate words in word and definition fields, now without messing with CSV formatting.
     row_contents[1] = row_contents[1].replace('-', ',')
     row_contents[3] = row_contents[3].replace('-', ',')
 
-with open(filename, 'w', newline='', encoding='utf-8') as file:
-    writer = csv.writer(file)
+with open(filename, 'w', newline='', encoding='utf-8') as write:
+    writer = csv.writer(write)
     writer.writerow(['Index', 'Latin Word', 'Gender', 'Definition', 'Reference Entry Index'])
     writer.writerows(entries)
