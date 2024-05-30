@@ -31,8 +31,8 @@ while True:
 
 with open('str.txt', 'r', encoding='utf-8') as read:
     content = [line.lstrip().replace('*', '').replace('{gen.}', 'gen.').replace
-               (', ', '- ').replace('$', ',').replace('%', '') for line in read.read().split('^')]  # Entries in the
-    # dictionary are separated by carets. This makes each line an individual entry.
+               (', ', '- ').replace('$', ',').replace('%', '').replace('pl.', ' pl.') for line in read.read().split('^')]
+    # Entries in the dictionary are separated by carets. This makes each line an individual entry.
 
 content = [line.split(',') for line in content]
 
