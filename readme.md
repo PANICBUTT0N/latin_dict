@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/github/license/PANICBUTT0N/latin_dict?logo=gnu)](license.md)
+[![License](https://img.shields.io/github/license/PANICBUTT0N/latin_dict?logo=gnu)](LICENSE)
 # latin_dict
 ### PANICBUTTON
 ## Overview
