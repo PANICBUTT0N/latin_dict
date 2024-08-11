@@ -55,22 +55,24 @@ for entry in content:
         modified_entry.insert(1, '')
     entries.append(modified_entry)
 
-# If word definitions reference other words, input the referenced word and its definition into the definition field.
+
 # Additionally, provide the row index of the referenced entry.
 for row_index, row_contents in enumerate(entries):
     row_contents.insert(0, str(row_index))
+    # Re-introduce commas to separate words in word and definition fields, now without messing with CSV formatting.
+    row_contents[1] = row_contents[1].replace('-', ',')
+    row_contents[3] = row_contents[3].replace('-', ',')
+    row_contents.append('')
+
+# If word definitions reference other words, input the referenced word and its definition into the definition field.
+for row_index, row_contents in enumerate(entries):
     if '[' in row_contents[3]:
         match_value = re.findall(r'\[(.*?)]', row_contents[3])[0]
         for row_index1, row_contents1 in enumerate(entries):
             if match_value in row_contents1[1]:
                 row_contents[3] = f'{row_contents1[1]} ({row_contents1[3]})'
-                row_contents.append(f'See entry index: {row_contents1[0]}')
+                row_contents[4] = f'See entry index: {row_contents1[0]}'
                 break
-    else:
-        row_contents.append('')
-    # Re-introduce commas to separate words in word and definition fields, now without messing with CSV formatting.
-    row_contents[1] = row_contents[1].replace('-', ',')
-    row_contents[3] = row_contents[3].replace('-', ',')
 
 with open(filename, 'w', newline='', encoding='utf-8') as write:
     writer = csv.writer(write)
